@@ -1,3 +1,4 @@
+import { NotImplementedError } from '../extensions/index.js';
 const CustomError = require("../extensions/custom-error");
 
 const MODERN_ACTIVITY= 15; 
