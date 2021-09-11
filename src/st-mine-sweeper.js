@@ -1,3 +1,4 @@
+  
 import { NotImplementedError } from '../extensions/index.js';
 
 /**
@@ -23,7 +24,41 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper(matrix) {
+  const result = [];
+  const n = matrix.length;
+  const m = matrix[0].length;
+
+  const dx = [-1, 0, 1, -1, 1, -1, 0, 1];
+  const dy = [-1, -1, -1, 0, 0, 1, 1, 1];
+
+  for (let i = 0; i < n; i++) {
+    result.push([]);
+    for (let j = 0; j < m; j++) {
+      if (matrix[i][j] === true) {
+        result[i].push(1); // means that there is the bomb
+      } else {
+        result[i].push(0); // means that is empty field
+      }
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (!matrix[i][j]) {
+        // count
+        let numberOfBombs = 0;
+        for (let k = 0; k < dx.length; k++) {
+          const idxI = i + dy[k];
+          const idxJ = j + dx[k];
+          if (idxI >= 0 && idxI < n && idxJ >= 0 && idxJ < m) {
+            if (matrix[idxI][idxJ]) numberOfBombs++;
+          }
+        }
+        result[i][j] = numberOfBombs;
+      }
+    }
+  }
+
+  return result;
 }
